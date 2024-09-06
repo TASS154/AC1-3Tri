@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/index.html">
+                <img src="https://i.ibb.co/2q0813D/Fiap-Medicine.png" alt="logo" style="width:120px;"
+                    class="rounded-pill">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynavbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)">Medicamentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)">Pacientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)">Vendas</a>
+                    </li>
+                </ul>
+                <div class="search-container d-flex">
+                    <form class="d-flex me-2">
+                        <input class="form-control me-2" type="text" placeholder="Buscar">
+                        <button class="btn btn-primary" type="button">Buscar</button>
+                    </form>
+                    <button type="button" class="btn btn-outline-secondary">
+                        <a href="/cadastro" class="text-decoration-none text-light">Cadastrar</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <p class="d-inline-flex gap-1">
+                    <a class="btn btn-warning" data-bs-toggle="collapse" href="#collapsePaciente" role="button"
+                        aria-expanded="false" aria-controls="collapsePaciente">
+                        Cadastrar Paciente
+                    </a>
+                </p>
+
+                <p class="d-inline-flex gap-1">
+                    <a class="btn btn-danger" data-bs-toggle="collapse" href="#collapseMedicamento" role="button"
+                        aria-expanded="false" aria-controls="collapseMedicamento">
+                        Cadastrar Medicamento
+                    </a>
+                </p>
+
+                <p class="d-inline-flex gap-1">
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseVendas" role="button"
+                        aria-expanded="false" aria-controls="collapseVendas">
+                        Cadastrar Vendas
+                    </a>
+                </p>
+
+                <div class="collapse" id="collapseVendas">
+                    <form action="/cadastro" method="post">
+                        <div class="form-group">
+                            <label for="datacompra">Data da Compra:</label>
+                            <input type="text" class="form-control" placeholder="Insira a data de compra aqui"
+                                id="datacompra" name="datacompra" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="info_paciente">Informações do paciente que realizou a compra:</label>
+                            <input type="text" class="form-control"
+                                placeholder="Insira as informações do paciente que realizou a compra aqui"
+                                id="info_paciente" name="info_paciente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="infomedica">Informações do medicamento adquirido:</label>
+                            <input type="text" class="form-control"
+                                placeholder="Insira as informações do medicamento adquirido aqui" id="infomedica"
+                                name="infomedica" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantidade_comprada">Quantidade comprada:</label>
+                            <input type="number" class="form-control" placeholder="Insira a quantidade comprada aqui"
+                                id="quantidade_comprada" name="quantidade_comprada" required>
+                        </div> <br>
+                        <button type="submit" class="btn btn-primary w-100" name="cadastrar_venda" value="venda">Cadastrar Venda</button>
+                        <br>
+                    </form>
+
+                    <h1>Exemplo de Venda:</h1>
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Nome da Venda</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Quantidade comprada: 1234</h6>
+                            <p class="card-text"><strong>Informações do Paciente:</strong></p>
+                            <p class="text-break">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                            <p class="card-text"><strong>Informações do medicamento adquirido:</strong></p>
+                            <p class="text-break">Lorem ipsum dolor sit amet.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="collapse" id="collapseMedicamento">
+                    <form action="/cadastro" method="post">
+                        <div class="form-group">
+                            <label for="Nome_Medicamento">Nome do medicamento:</label>
+                            <input type="text" class="form-control" placeholder="Insira o Nome do Medicamento aqui"
+                                id="nome" name="Nome_Medicamento" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Codigo_Registro">Código de registro:</label>
+                            <input type="text" class="form-control" placeholder="Insira o código de registro aqui"
+                                id="cod_registro" name="Codigo_Registro" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dosagem">Dosagem:</label>
+                            <input type="text" class="form-control" placeholder="Insira a dosagem aqui" id="dosagem"
+                                name="dosagem" required>
+                        </div> <br>
+                        <button type="submit" class="btn btn-primary w-100" name="cadastrar_medicamento" value="medicamento">Cadastrar Medicamento</button>
+                        <br>
+                    </form>
+
+                    <h1>Exemplo de Medicamento:</h1>
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Nome do Medicamento</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary">Código de registro: 1234</h6>
+                            <p class="card-text"><strong>Dosagem:</strong></p>
+                            <p class="card-text">Lorem ipsum</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="collapse" id="collapsePaciente">
+                    <form action="/cadastro" method="post">
+                        <div class="form-group">
+                            <label for="Nome_Paciente">Nome Completo do Paciente:</label>
+                            <input type="text" class="form-control" placeholder="Insira o Nome do Paciente aqui"
+                                id="nome_P" name="Nome_Paciente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Data_Nascimento">Data de Nascimento:</label>
+                            <input type="text" class="form-control" placeholder="Insira a data de nascimento aqui"
+                                id="data_nascimento" name="Data_Nascimento" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Documento">Número do documento de identidade:</label>
+                            <input type="number" class="form-control"
+                                placeholder="Insira o documento de identidade aqui" id="documento" name="Documento"
+                                required>
+                        </div> <br>
+                        <button type="submit" class="btn btn-primary w-100" name="cadastrar_paciente" value="paciente">Cadastrar Paciente</button>
+                        <br>
+                    </form>
+
+                    <h1>Exemplo de Paciente:</h1>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Data de Nascimento</th>
+                                <th scope="col">Número do documento de identidade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Henrique</td>
+                                <td>30/01/2007</td>
+                                <td>123456789</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Thiago</td>
+                                <td>03/06/2008</td>
+                                <td>987654321</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

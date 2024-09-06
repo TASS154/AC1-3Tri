@@ -1,0 +1,36 @@
+.navbar {
+    background-color: #6d7075;
+    color: #000000;
+}
+
+.navbar .nav-link {
+    color: #000000;
+}
+
+.navbar.dark-mode {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.navbar.dark-mode .nav-link {
+    color: #ffffff; 
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.card.dark-mode {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.card.dark-mode .card-body {
+    background-color: #1e1e1e;
+}
+
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
