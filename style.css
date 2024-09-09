@@ -34,3 +34,14 @@ body.dark-mode {
     background-color: #0d6efd;
     border-color: #0d6efd;
 }
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; 
+    text-align: center;
+}
+
+.welcome {
+    text-align: center;
+}

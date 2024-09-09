@@ -4,13 +4,14 @@ const app = express();
 const path = require('path')
 const port = 3000;
 const methodOverride = require('method-override');
+const fs = require('fs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(methodOverride('_method'));
 
 const url = 'mongodb://127.0.0.1:27017/';
-const dbName = 'Venda';
+const dbName = 'Farmacia';
 const collectionPaciente = 'pacientes';
 const collectionMedicamento = 'medicamentos';
 const collectionVenda = 'vendas';
@@ -21,11 +22,19 @@ app.use(express.static(path.join(__dirname)));
 function CardPacientes(pacientes) {
     return `
     <div class="card mb-3">
-    <img src="${pacientes.foto}" class="card-img-top w-100 hauto" alt="${pacientes.nome}>
         <div class="card-body">
-        <h5 class="card-title">${pacientes.nome}</h5>
-        <p class="card-text">${pacientes.data_nascimento}</p>
-        <p class="card-text">identidade: ${pacientes.documento_identidade}</p>
+        <h5 class="card-title">${pacientes.Nome}</h5>
+        <p class="card-text">${pacientes.Nascimento}</p>
+        <p class="card-text">identidade: ${pacientes.Identidade}</p>
+        <form action="/deletar" method="POST">
+        <input type="hidden" name="id" value="${pacientes._id}" />
+        <input type="hidden" name="_method" value="DELETE" />
+        <button type="submit" class="btn btn-danger">Deletar</button>
+        </form>
+
+        <button class="btn btn-warning">
+            <a href="/modificar">alterar</a>
+        </button>
         </div>
     </div>
     `;
@@ -34,24 +43,34 @@ function CardPacientes(pacientes) {
 function CardMedicamentos(medicamentos) {
     return `
     <div class="card mb-3">
-    <img src="${medicamentos.foto}" class="card-img-top w-100 hauto" alt="${medicamentos.nome}>
+    <img src="${medicamentos.foto}" class="card-img-top" style="width: 175px; height: 175px" alt="${medicamentos.Nome}>
         <div class="card-body">
-        <h5 class="card-title">${medicamentos.nome}</h5>
-        <p class="card-text">${medicamentos.data_nascimento}</p>
-        <p class="card-text">identidade: ${medicamentos.documento_identidade}</p>
+        <h5 class="card-title">${medicamentos.Nome}</h5>
+        <p class="card-text">${medicamentos.Registro}</p>
+        <p class="card-text">identidade: ${medicamentos.Dosagem}</p>
+        <form action="/deletar" method="POST">
+        <input type="hidden" name="id" value="${medicamentos._id}" />
+        <input type="hidden" name="_method" value="DELETE" />
+        <button type="submit" class="btn btn-danger">Deletar</button>
+        </form>
         </div>
     </div>
     `;
 }
 
-function Cardvendas(vendas) {
+function CardVendas(vendas) {
     return `
     <div class="card mb-3">
-    <img src="${vendas.foto}" class="card-img-top w-100 hauto" alt="${vendas.nome}>
         <div class="card-body">
-        <h5 class="card-title">${vendas.nome}</h5>
-        <p class="card-text">${vendas.data_nascimento}</p>
-        <p class="card-text">identidade: ${vendas.documento_identidade}</p>
+        <h5 class="card-title">${vendas.Compra}</h5>
+        <p class="card-text">Paciente: ${vendas.Info_paciente.Nome},<br> Nascimento: ${vendas.Info_paciente.Nascimento}, <br> Identidade: ${vendas.Info_paciente.Identidade}</p>
+        <p class="card-text">Medicamento: ${vendas.Info_medicamento.Nome}, <br> Registro: ${vendas.Info_medicamento.Registro}, <br> Dosagem: ${vendas.Info_medicamento.Dosagem}</p>
+        <p class="card-text">quantidade: ${vendas.Quantidade}</p>
+        <form action="/deletar" method="POST">
+        <input type="hidden" name="id" value="${vendas._id}" />
+        <input type="hidden" name="_method" value="DELETE" />
+        <button type="submit" class="btn btn-danger">Deletar</button>
+        </form>
         </div>
     </div>
     `;
@@ -70,7 +89,9 @@ app.get('/cadastro', (req, res) => {
     res.sendFile(__dirname + '/cadastro.html');
 });
 
-app.post('/cadastro', async (req, res) => {
+//CADASTRAR
+
+app.post('/cadastro/paciente', async (req, res) => {
     const novoPaciente = req.body;
 
     const client = new MongoClient(url);
@@ -84,13 +105,66 @@ app.post('/cadastro', async (req, res) => {
         const result = await collection.insertOne(novoPaciente);
         console.log(`Paciente cadastrado com sucesso. ID: ${result.insertedId}`);
 
-        res.redirect('/')
+        res.redirect('/pacientes')
     } catch (err) {
         console.error('Erro ao cadastrar o Paciente:', err);
         res.status(500).send('Erro ao cadastrar o paciente. Por favor, tente novamente mais tarde');
     } finally {
         client.close();
     }
+});
+
+app.post('/cadastro/medicamento', async (req, res) => {
+    const novoMedicamento = req.body;
+
+    const client = new MongoClient(url);
+
+    try {
+        await client.connect();
+
+        const db = client.db(dbName);
+        const collection = db.collection(collectionMedicamento);
+
+        const result = await collection.insertOne(novoMedicamento);
+        console.log(`Medicamento cadastrado com sucesso. ID: ${result.insertedId}`);
+        res.redirect('/medicamentos')
+    } catch (err) {
+        console.error('Erro ao cadastrar o Medicamento:', err);
+        res.status(500).send('Erro ao cadastrar o Medicamento. Por favor, tente novamente mais tarde');
+    } finally {
+        client.close();
+    }
+});
+
+app.post('/cadastro/venda', async (req, res) => {
+    const novoVenda = req.body;
+
+    const client = new MongoClient(url);
+
+    try {
+        await client.connect();
+
+        const db = client.db(dbName);
+        const collection = db.collection(collectionVenda);
+
+        const result = await collection.insertOne(novoVenda);
+        console.log(`Venda cadastrado com sucesso. ID: ${result.insertedId}`);
+        res.redirect('/vendas')
+    } catch (err) {
+        console.error('Erro ao cadastrar o Venda:', err);
+        res.status(500).send('Erro ao cadastrar o Venda. Por favor, tente novamente mais tarde');
+    } finally {
+        client.close();
+    }
+});
+
+
+//FIM DO CADASTRAR
+
+app.get('/deletar', (req, res) => {
+    res.send(`
+    <h1>Deletado</h1>
+    `)
 });
 
 app.post('/deletar', async (req, res) => {
@@ -101,11 +175,15 @@ app.post('/deletar', async (req, res) => {
         await client.connect();
 
         const db = client.db(dbName);
-        const collection = db.collection(collectionPaciente)
+        const collectionP = db.collection(collectionPaciente)
+        const collectionM = db.collection(collectionMedicamento)
+        const collectionV = db.collection(collectionVenda)
 
-        const result = await collection.deleteOne({ _id: new ObjectId(id)});
+        const result1 = await collectionP.deleteOne({ _id: new ObjectId(id)});
+        const result2 = await collectionM.deleteOne({ _id: new ObjectId(id)});
+        const result3 = await collectionV.deleteOne({ _id: new ObjectId(id)});
 
-        if (result.deletedCount > 0){
+        if (result1.deletedCount > 0 || result2.deletedCount > 0 || result3.deletedCount > 0){
             res.redirect('/');
         } else {
             res.status(404).send('Paciente não encontrado.');
@@ -130,7 +208,14 @@ app.get('/pacientes', async (req, res) => {
     
         const pacientes = await collection.find({}).toArray();
 
-        res.json(pacientes);
+
+
+            const cardsHtml = pacientes.map(paciente => CardPacientes(paciente)).join('');
+            const pageHtmlPath = path.join(__dirname, 'dados.html');
+            let pageHtml = fs.readFileSync(pageHtmlPath, 'utf-8');
+            pageHtml = pageHtml.replace('{{cardsHtml}}', cardsHtml);
+            res.send(pageHtml);
+            
     } catch (err) {
         console.error('Erro ao buscar pacientes:', err);
         res.status(500).send(
@@ -208,9 +293,14 @@ app.get('/medicamentos', async (req, res) => {
         const db = client.db(dbName);
         const collection = db.collection(collectionMedicamento);
     
-        const medicamento = await collection.find({}).toArray();
+        const medicamentos = await collection.find({}).toArray();
 
-        res.json(medicamento);
+        const cardsHtml = medicamentos.map(medicamento => CardMedicamentos(medicamento)).join('');
+        const pageHtmlPath = path.join(__dirname, 'dados.html');
+        let pageHtml = fs.readFileSync(pageHtmlPath, 'utf-8');
+        pageHtml = pageHtml.replace('{{cardsHtml}}', cardsHtml);
+        res.send(pageHtml);
+
     } catch (err) {
         console.error('Erro ao buscar medicamentos:', err);
         res.status(500).send(
@@ -284,13 +374,19 @@ app.get('/vendas', async (req, res) => {
     const client = new MongoClient(url)
 
     try {
+        
         await client.connect()
         const db = client.db(dbName);
         const collection = db.collection(collectionVenda);
     
         const vendas = await collection.find({}).toArray();
 
-        res.json(vendas);
+        const cardsHtml = vendas.map(venda => CardVendas(venda)).join('');
+        const pageHtmlPath = path.join(__dirname, 'dados.html');
+        let pageHtml = fs.readFileSync(pageHtmlPath, 'utf-8');
+        pageHtml = pageHtml.replace('{{cardsHtml}}', cardsHtml);
+        res.send(pageHtml);
+        
     } catch (err) {
         console.error('Erro ao buscar vendas:', err);
         res.status(500).send(

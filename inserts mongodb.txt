@@ -1,0 +1,110 @@
+use Farmacia
+
+db.pacientes.insertMany([
+    {
+        "Nome": "Ana Paula Costa",
+        "Nascimento": "12/07/1990",
+        "Identidade": "CPF: 234.567.890-12"
+    },
+    {
+        "Nome": "Carlos Eduardo Lima",
+        "Nascimento": "22/11/1978",
+        "Identidade": "RG: 12.345.678-9"
+    },
+    {
+        "Nome": "Mariana Souza Alves",
+        "Nascimento": "03/02/1982",
+        "Identidade": "CPF: 345.678.901-23"
+    },
+    {
+        "Nome": "Roberto Fernandes",
+        "Nascimento": "15/09/1965",
+        "Identidade": "RG: 98.765.432-1"
+    }
+]);
+
+db.medicamentos.insertMany([
+    {
+        "Nome": "Paracetamol",
+        "Registro": "67890-123",
+        "Dosagem": "500 mg",
+        "foto": "https://i.ibb.co/Rbf7k5F/paracetamol.png"
+    },
+    {
+        "Nome": "Amoxicilina",
+        "Registro": "23456-789",
+        "Dosagem": "250 mg",
+        "foto": "https://i.ibb.co/pdDDKzj/amoxicilina.png"
+    },
+    {
+        "Nome": "Ibuprofeno",
+        "Registro": "34567-890",
+        "Dosagem": "400 mg",
+        "foto": "https://i.ibb.co/ZLMPtJ4/ibuprofeno.png"
+    },
+    {
+        "Nome": "Loratadina",
+        "Registro": "45678-901",
+        "Dosagem": "10 mg",
+        "foto": "https://i.ibb.co/GRkk8W0/loratadina.png"
+    }
+]);
+
+db.vendas.insertMany([
+    {
+        "Compra": "02/09/2024",
+        "Info_paciente": {
+            "Nome": "Ana Paula Costa",
+            "Nascimento": "12/07/1990",
+            "Identidade": "CPF: 234.567.890-12"
+        },
+        "Info_medicamento": {
+            "Nome": "Paracetamol",
+            "Registro": "67890-123",
+            "Dosagem": "500 mg"
+        },
+        "Quantidade": "1 caixa"
+    },
+    {
+        "Compra": "03/09/2024",
+        "Info_paciente": {
+            "Nome": "Carlos Eduardo Lima",
+            "Nascimento": "22/11/1978",
+            "Identidade": "RG: 12.345.678-9"
+        },
+        "Info_medicamento": {
+            "Nome": "Amoxicilina",
+            "Registro": "23456-789",
+            "Dosagem": "250 mg"
+        },
+        "Quantidade": "3 frascos"
+    },
+    {
+        "Compra": "04/09/2024",
+        "Info_paciente": {
+            "Nome": "Mariana Souza Alves",
+            "Nascimento": "03/02/1982",
+            "Identidade": "CPF: 345.678.901-23"
+        },
+        "Info_medicamento": {
+            "Nome": "Ibuprofeno",
+            "Registro": "34567-890",
+            "Dosagem": "400 mg"
+        },
+        "Quantidade": "2 caixas"
+    },
+    {
+        "Compra": "05/09/2024",
+        "Info_paciente": {
+            "Nome": "Roberto Fernandes",
+            "Nascimento": "15/09/1965",
+            "Identidade": "RG: 98.765.432-1"
+        },
+        "Info_medicamento": {
+            "Nome": "Loratadina",
+            "Registro": "45678-901",
+            "Dosagem": "10 mg"
+        },
+        "Quantidade": "5 blísteres"
+    }
+]);

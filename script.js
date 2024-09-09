@@ -3,18 +3,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const themeImages = document.querySelectorAll('.theme-image');
     const navbar = document.getElementById('navbar');
     const logoImage = document.querySelector('.logo-image');
+    const logo2Image = document.querySelector('.logo2-image'); // Seleciona a logo2
     const cardImage = document.querySelector('.card-image');
     const isDarkMode = localStorage.getItem('dark-mode') === 'true';
 
     function updateImagesToTheme(isDark) {
         themeImages.forEach(img => {
-            // Ignora as imagens específicas
             if (img !== logoImage && img !== cardImage) {
                 const darkSrc = img.getAttribute('data-dark');
                 const lightSrc = img.getAttribute('data-light');
                 img.src = isDark ? darkSrc : lightSrc;
             }
         });
+        // Atualiza o src da logo2 também
+        if (logo2Image) {
+            const logo2DarkSrc = logo2Image.getAttribute('data-dark');
+            const logo2LightSrc = logo2Image.getAttribute('data-light');
+            logo2Image.src = isDark ? logo2DarkSrc : logo2LightSrc;
+        }
     }
 
     function updateNavbarTheme(isDark) {
